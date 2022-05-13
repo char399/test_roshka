@@ -1,0 +1,71 @@
+<html>
+<style>
+  table, tr, td {
+    border:1px solid black;
+  }
+  td {
+    width: 200;
+    height: 40;
+  }
+  button:hover {
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+  }
+</style>
+<body>
+  <h1> Test de Conocimiento</h1>
+  <input type="text" id="input"><button onclick="addToTable()">Agregar</button>
+  <br>
+  <button onclick="cleanTable()">Limpiar</button>
+  <br>
+  <table><tbody id="table_body"><tr><td></td></tr></tbody></table>
+
+  <script>
+    const addToTable = () => {
+      const input = document.getElementById("input").value
+      
+      if( isNaN(input) || !input) { 
+        addRow(input)
+      } else {
+        addColumns(input)
+      }
+    }
+
+    const addRow = (color) => {
+      const table = getTable()
+      const q = table.rows[0].children.length
+      const column = `<td style="background-color: ${color};"></td>`
+      let columns = ''
+      for (var i = q - 1; i >= 0; i--) {
+        columns += column
+      }
+      const row = `<tr>${columns}</tr>`
+      table.innerHTML += row
+    }
+
+    const addColumns = (columns) => {
+      const table = getTable()
+      const rows = table.rows
+      for (var i = rows.length - 1; i >= 0; i--) {
+        addColumnsToRow(rows[i], columns)
+      }
+
+    }
+
+    const addColumnsToRow = (tr, columns) => {
+      const color = tr.children[0].style.backgroundColor
+      const column = `<td style="background-color: ${color};"></td>`
+      for (var i = columns - 1; i >= 0; i--) {
+        tr.innerHTML = tr.innerHTML + column
+      }
+    }
+
+    const cleanTable = () => {
+      getTable().innerHTML = '<tr><td></td></tr>'
+    }
+
+    const getTable = () => document.getElementById('table_body')
+  </script>
+</body>
+</html>
